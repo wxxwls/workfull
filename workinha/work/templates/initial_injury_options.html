@@ -106,10 +106,10 @@
             <div id="added-items" class="added-items"></div>
 
             <!-- 파일 첨부 필드 (초기에는 숨김 처리) -->
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'success' %}">
                 {% csrf_token %}
                 <div id="file-upload-section"></div>
-
+            
                 <!-- 제출 버튼 -->
                 <button type="submit" class="btn btn-submit w-100 mt-4">제출하기</button>
             </form>

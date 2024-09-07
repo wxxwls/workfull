@@ -157,6 +157,12 @@ class InjuryApplication(models.Model):
     receipt_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # 수령금액
     payment_source = models.CharField(max_length=100, blank=True, null=True)  # 지급처
     attached_documents = models.ImageField(upload_to='documents/', blank=True, null=True)  # 첨부서류 이미지
+    medical_report = models.FileField(upload_to='medical_reports/', blank=True, null=True)  # 의무기록지/진료비 내역서
+    wage_statement = models.FileField(upload_to='wage_statements/', blank=True, null=True)  # 근 3개월 간의 임금내역(통장사본)
+    witness_statement = models.FileField(upload_to='witness_statements/', blank=True, null=True)  # 목격자 진술서
+    accident_confirmation = models.FileField(upload_to='accident_confirmations/', blank=True, null=True)  # 사고 사실확인서
+    alien_registration = models.FileField(upload_to='alien_registrations/', blank=True, null=True)  # 외국인 등록증
+
 
     
 
