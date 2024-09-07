@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산재 신청 절차 선택</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e9f7ef;
+        }
+
+        .menu-container {
+            margin-top: 10vh;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-menu {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+        }
+
+        .btn-menu:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="menu-container text-center">
+            <h2 class="mb-4" style="color: #28a745;">산재 신청 절차 선택</h2>
+            <a href="{% url 'initial_injury_options' %}" class="btn btn-menu">최초 요양 급여신청서</a>
+            <a href="{% url 'post_approval_options' %}" class="btn btn-menu">승인 후</a>
+        </div>
+    </div>
+</body>
+</html>

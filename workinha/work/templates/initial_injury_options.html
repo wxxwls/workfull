@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>최초 요양 급여신청서 옵션</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e9f7ef;
+        }
+
+        .menu-container {
+            margin-top: 10vh;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px; /* 부모 요소의 최대 너비를 고정 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-menu {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            width: 100%; /* 버튼의 너비를 100%로 고정 */
+            text-align: center;
+        }
+
+        .btn-menu:hover {
+            background-color: #218838;
+        }
+
+        /* 드롭다운 목록 스타일 */
+        .dropdown-list {
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        .dropdown-list li {
+            padding: 10px;
+            border-bottom: 1px solid #e9f7ef;
+        }
+
+        .dropdown-list li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-list li a {
+            color: #28a745;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+        }
+
+        .dropdown-list li a:hover {
+            background-color: #e9f7ef;
+        }
+
+        /* 추가된 항목을 표시할 공간 */
+        .added-items {
+            margin-top: 20px;
+        }
+
+        /* 파일 업로드 필드를 숨김 */
+        .file-upload {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="menu-container text-center">
+            <h2 class="mb-4" style="color: #28a745;">최초 요양 급여신청서</h2>
+
+            <!-- 최초 요양 급여 신청서 버튼 -->
+            <a href="{% url 'apply_injury' %}" class="btn btn-menu">최초 요양 급여 신청서</a>
+
+            <!-- + 버튼 -->
+            <button class="btn btn-menu" onclick="toggleDropdown()">+</button>
+
+            <!-- 선택 리스트 -->
+            <ul id="dropdown-list" class="dropdown-list">
+                <li><a href="#" onclick="addItem('의무기록지/진료비 내역서')">의무기록지/진료비 내역서</a></li>
+                <li><a href="#" onclick="addItem('근 3개월 간의 임금내역(통장사본)')">근 3개월 간의 임금내역(통장사본)</a></li>
+                <li><a href="#" onclick="addItem('목격자 진술서')">목격자 진술서</a></li>
+                <li><a href="#" onclick="addItem('사고 사실확인서')">사고 사실확인서</a></li>
+                <li><a href="#" onclick="addItem('외국인 등록증')">외국인 등록증</a></li>
+            </ul>
+
+            <!-- 추가된 항목들을 표시할 공간 -->
+            <div id="added-items" class="added-items"></div>
+
+            <!-- 파일 첨부 필드 (초기에는 숨김 처리) -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="file-upload-section"></div>
+
+                <!-- 제출 버튼 -->
+                <button type="submit" class="btn btn-submit w-100 mt-4">제출하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript 코드 -->
+    <script>
+        // 드롭다운 리스트를 토글
+        function toggleDropdown() {
+            var dropdown = document.getElementById('dropdown-list');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // 항목을 추가하고 리스트에서 제거하고 파일 첨부 필드 추가
+        function addItem(itemName) {
+            // 추가된 항목 표시 영역
+            var addedItemsDiv = document.getElementById('added-items');
+
+            // 새로운 버튼 생성
+            var newButton = document.createElement('button');
+            newButton.classList.add('btn', 'btn-menu');
+            newButton.textContent = itemName;
+            addedItemsDiv.appendChild(newButton);
+
+            // 파일 첨부 필드 생성
+            addFileInput(itemName);
+
+            // 드롭다운에서 선택한 항목 제거
+            var links = document.querySelectorAll('#dropdown-list li');
+            links.forEach(function(link) {
+                if (link.textContent === itemName) {
+                    link.style.display = 'none';  // 선택된 항목 숨김
+                }
+            });
+
+            // 드롭다운 리스트를 다시 숨김
+            document.getElementById('dropdown-list').style.display = 'none';
+        }
+
+        // 파일 입력 필드를 추가
+        function addFileInput(itemName) {
+            var fileUploadSection = document.getElementById('file-upload-section');
+
+            var fileInputDiv = document.createElement('div');
+            fileInputDiv.classList.add('file-upload');
+
+            var label = document.createElement('label');
+            label.textContent = itemName + ' 파일 첨부:';
+
+            var input = document.createElement('input');
+            input.type = 'file';
+            input.name = itemName.toLowerCase().replace(/ /g, '_');
+            input.accept = 'image/*'; // 이미지 파일만 허용
+
+            fileInputDiv.appendChild(label);
+            fileInputDiv.appendChild(input);
+            fileUploadSection.appendChild(fileInputDiv);
+
+            fileInputDiv.style.display = 'block'; // 필드 표시
+        }
+    </script>
+</body>
+</html>
