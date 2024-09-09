@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산재 신청 폼</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e9f7ef;
+        }
+
+        .form-container {
+            margin-top: 5vh;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 8px rgba(40, 167, 69, 0.1);
+        }
+
+        .form-label {
+            color: #28a745;
+        }
+
+        .btn-submit {
+            background-color: #28a745;
+            color: white;
+            border: none;
+        }
+
+        .btn-submit:hover {
+            background-color: #218838;
+        }
+
+        .btn-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: #28a745;
+        }
+
+        .btn-back:hover {
+            color: #218838;
+        }
+    </style>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="form-container">
+                    <!-- 뒤로가기 버튼 (아이콘) -->
+                    <button class="btn-back" onclick="history.back()">
+                        <i class="bi bi-arrow-left-circle"></i>
+                    </button>
+                    <h2 class="text-center mb-4" style="color: #28a745;">휴업급여신청서</h2>
+
+                    <form method="post" enctype="multipart/form-data" id="injuryForm">
+                        {% csrf_token %}
+
+                        <!-- 성명 -->
+                        <div class="mb-3">
+                            <label for="name" class="form-label">이름</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <!-- 생년월일 -->
+                        <div class="mb-3">
+                            <label for="birth_date" class="form-label">생년월일</label>
+                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                        </div>
+
+                        <!-- 재해발생일 -->
+                        <div class="mb-3">
+                            <label for="accident_date" class="form-label">재해발생일</label>
+                            <input type="date" class="form-control" id="accident_date" name="accident_date" required>
+                        </div>
+
+                        <!-- 수령계좌 변경 여부 -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="change_account" name="change_account">
+                            <label class="form-check-label" for="change_account">수령 계좌를 변경 하시겠습니까?</label>
+                        </div>
+
+                        <!-- 수령계좌 정보 -->
+                        <div id="account-info" style="display: none;">
+                            <div class="mb-3">
+                                <label for="bank_name" class="form-label">은행명</label>
+                                <input type="text" class="form-control" id="bank_name" name="bank_name">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="account_number" class="form-label">계좌번호</label>
+                                <input type="text" class="form-control" id="account_number" name="account_number">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="account_holder" class="form-label">예금주</label>
+                                <input type="text" class="form-control" id="account_holder" name="account_holder">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="account_type" class="form-label">계좌 유형 선택</label>
+                                <select class="form-select" id="account_type" name="account_type">
+                                    <option value="normal">보통계좌</option>
+                                    <option value="protected">보험급여 전용계좌(희망지킴이-압류금지계좌)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 청구기간 -->
+                        <div class="mb-3">
+                            <label for="claim_start_date" class="form-label">청구 시작일</label>
+                            <input type="date" class="form-control" id="claim_start_date" name="claim_start_date" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="claim_end_date" class="form-label">청구 종료일</label>
+                            <input type="date" class="form-control" id="claim_end_date" name="claim_end_date" required>
+                        </div>
+
+                        <!-- 취업 여부 -->
+                        <div class="mb-3">
+                            <label for="employment_status" class="form-label">청구 기간 중 취업 여부</label>
+                            <select class="form-select" id="employment_status" name="employment_status" required>
+                                <option value="employed">취업함</option>
+                                <option value="unemployed">취업하지 못함</option>
+                            </select>
+                        </div>
+
+                        <!-- 급여 수령 여부 -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="salary_received" name="salary_received">
+                            <label class="form-check-label" for="salary_received">청구 기간 중 급여를 받았습니까?</label>
+                        </div>
+
+                        <!-- 동일 사유로 보상 여부 -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="received_compensation" name="received_compensation">
+                            <label class="form-check-label" for="received_compensation">동일한 사유로 보상을 받았습니까?</label>
+                        </div>
+
+                        <!-- 보상 정보 (보상을 받은 경우만 입력) -->
+                        <div id="compensation-info" style="display: none;">
+                            <div class="mb-3">
+                                <label for="compensation_receipt_date" class="form-label">수령일자</label>
+                                <input type="date" class="form-control" id="compensation_receipt_date" name="compensation_receipt_date">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="compensation_amount" class="form-label">수령금액</label>
+                                <input type="number" class="form-control" id="compensation_amount" name="compensation_amount" step="10000">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="compensation_provider" class="form-label">지급한 자</label>
+                                <input type="text" class="form-control" id="compensation_provider" name="compensation_provider">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="compensation_documents" class="form-label">첨부 서류</label>
+                                <input type="file" class="form-control" id="compensation_documents" name="compensation_documents">
+                            </div>
+                        </div>
+
+                        <!-- 자동 지급 신청 여부 -->
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="auto_payment_request" name="auto_payment_request">
+                            <label class="form-check-label" for="auto_payment_request">자동 지급 신청</label>
+                        </div>
+
+                        <!-- 저장하기 버튼 -->
+                        <button type="submit" class="btn btn-submit w-100">저장하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript: 계좌 및 보상 정보 표시 제어 및 데이터 저장 -->
+    <script>
+        // 계좌 변경 시 계좌 정보를 보이도록 설정
+        document.getElementById('change_account').addEventListener('change', function () {
+            document.getElementById('account-info').style.display = this.checked ? 'block' : 'none';
+        });
+
+        // 보상 수령 여부에 따라 보상 정보를 입력할 수 있도록 설정
+        document.getElementById('received_compensation').addEventListener('change', function () {
+            document.getElementById('compensation-info').style.display = this.checked ? 'block' : 'none';
+        });
+
+        // 폼 데이터가 변경될 때마다 sessionStorage에 저장
+        document.getElementById('injuryForm').addEventListener('input', function () {
+            const formData = new FormData(this);
+            formData.forEach((value, key) => {
+                sessionStorage.setItem(key, value);
+            });
+        });
+
+        // 페이지 로드 시 sessionStorage에서 값 불러오기
+        window.onload = function () {
+            const formElements = document.getElementById('injuryForm').elements;
+            for (let element of formElements) {
+                if (element.name && sessionStorage.getItem(element.name)) {
+                    if (element.type === 'checkbox') {
+                        element.checked = sessionStorage.getItem(element.name) === 'on';
+                    } else {
+                        element.value = sessionStorage.getItem(element.name);
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+
+</html>

@@ -20,5 +20,8 @@ urlpatterns = [
     path('apply-injury/post-approval-options/', views.post_approval_options, name='post_approval_options'),  # 승인 후 절차 세부 옵션 페이지
     path('apply/', views.apply_injury, name='apply_injury'),  # 산재 신청 폼을 표시하고 제출하는 URL
     path('success/', views.application_success, name='success'),  # 신청 성공 페이지
+    path('apply-injury/after/', views.after_apply_injury, name='after_apply_injury'),  # 승인 후 신청 페이지
+    path('apply-injury/danger/', views.danger, name='danger'),  # 경고 메시지 페이지
+    path('apply-injury/initial-after/', views.initial_after, name='initial_after'),  # 최초 요양 급여신청서 세부 옵션 페이지
 ]
 

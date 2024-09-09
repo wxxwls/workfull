@@ -157,16 +157,88 @@ class InjuryApplication(models.Model):
     receipt_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # 수령금액
     payment_source = models.CharField(max_length=100, blank=True, null=True)  # 지급처
     attached_documents = models.ImageField(upload_to='documents/', blank=True, null=True)  # 첨부서류 이미지
-    medical_report = models.FileField(upload_to='medical_reports/', blank=True, null=True)  # 의무기록지/진료비 내역서
-    wage_statement = models.FileField(upload_to='wage_statements/', blank=True, null=True)  # 근 3개월 간의 임금내역(통장사본)
-    witness_statement = models.FileField(upload_to='witness_statements/', blank=True, null=True)  # 목격자 진술서
-    accident_confirmation = models.FileField(upload_to='accident_confirmations/', blank=True, null=True)  # 사고 사실확인서
-    alien_registration = models.FileField(upload_to='alien_registrations/', blank=True, null=True)  # 외국인 등록증
-
-
-    
-
-
 
     def __str__(self):
         return f"{self.name} - {self.application_type}"
+
+class DocumentSubmission(models.Model): 
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)  # 제출한 사용자
+    medical_report = models.ImageField(upload_to='documents/', blank=True, null=True)  # 의료기록
+    wage_statement = models.ImageField(upload_to='documents/', blank=True, null=True)  # 임금내역서
+    witness_statement = models.ImageField(upload_to='documents/', blank=True, null=True)  # 목격자 진술서
+    accident_confirmation = models.ImageField(upload_to='documents/', blank=True, null=True)  # 사고 사실확인서
+    alien_registration = models.ImageField(upload_to='documents/', blank=True, null=True)  # 외국인 등록증
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return (
+            f"User: {self.user}, "
+            f"Medical Report: {'Yes' if self.medical_report else 'No'}, "
+            f"Wage Statement: {'Yes' if self.wage_statement else 'No'}, "
+            f"Witness Statement: {'Yes' if self.witness_statement else 'No'}, "
+            f"Accident Confirmation: {'Yes' if self.accident_confirmation else 'No'}, "
+            f"Alien Registration: {'Yes' if self.alien_registration else 'No'}"
+        )
+
+class afterInjuryApplication(models.Model):
+    # 기본 정보
+    name = models.CharField(max_length=100)  # 성명
+    birth_date = models.DateField()  # 생년월일
+    accident_date = models.DateField()  # 재해발생일
+
+    # 수령계좌 변경 여부
+    change_account = models.BooleanField(default=False, help_text="수령계좌를 변경하시겠습니까?")
+
+    # 수령 계좌 정보 (수령계좌를 변경할 경우만 입력)
+    bank_name = models.CharField(max_length=100, blank=True, null=True)  # 은행명
+    account_number = models.CharField(max_length=50, blank=True, null=True)  # 계좌번호
+    account_holder = models.CharField(max_length=100, blank=True, null=True)  # 예금주
+    account_type = models.CharField(max_length=50, choices=[
+        ('normal', '보통계좌'),
+        ('protected', '보험급여 전용계좌(희망지킴이-압류금지계좌)')
+    ], blank=True, null=True)  # 계좌 유형 선택
+
+    # 청구기간
+    claim_start_date = models.DateField()  # 청구 시작일
+    claim_end_date = models.DateField()  # 청구 종료일
+
+    # 청구 기간 중 취업 여부
+    employment_status = models.CharField(max_length=50, choices=[
+        ('employed', '취업함'),
+        ('unemployed', '취업하지 못함')
+    ])
+
+    # 청구 기간 중 급여 수령 여부
+    salary_received = models.BooleanField(default=False, help_text="청구 기간 중 급여를 받았습니까?")
+
+    # 동일한 사유로 보상을 받았는지 여부
+    received_compensation = models.BooleanField(default=False, help_text="동일한 사유로 보상을 받았습니까?")
+
+    # 보상을 받았을 경우 추가 정보
+    compensation_receipt_date = models.DateField(blank=True, null=True)  # 수령일자
+    compensation_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # 수령금액
+    compensation_provider = models.CharField(max_length=100, blank=True, null=True)  # 지급한 자
+    compensation_documents = models.ImageField(upload_to='documents/', blank=True, null=True)  # 첨부서류
+
+    # 자동 지급 신청 여부
+    auto_payment_request = models.BooleanField(default=False, help_text="자동 지급 신청 여부")
+
+    def __str__(self):
+        return f"{self.name} - {self.accident_date}"
+    
+class afterDocumentSubmission(models.Model): 
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE)  # 제출한 사용자
+    DisabilityCompensation = models.ImageField(upload_to='documents/', blank=True, null=True)  # 장해급여신청서
+    Rehabilitation = models.ImageField(upload_to='documents/', blank=True, null=True)  # 재요양신청서
+    VocationalTrainingSupport = models.ImageField(upload_to='documents/', blank=True, null=True)  # 직업전환훈련신청서
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return (
+            f"User: {self.user}, "
+            f"DisabilityCompensation: {'Yes' if self.DisabilityCompensation else 'No'}, "
+            f"Rehabilitation: {'Yes' if self.Rehabilitation else 'No'}, "
+            f"VocationalTrainingSupport: {'Yes' if self.VocationalTrainingSupport else 'No'}, "
+        )

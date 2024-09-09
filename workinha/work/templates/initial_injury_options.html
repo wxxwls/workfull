@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>최초 요양 급여신청서 옵션</title>
+    <title>최초 요양 급여 신청서</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -16,7 +16,7 @@
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 400px; /* 부모 요소의 최대 너비를 고정 */
+            max-width: 400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -29,152 +29,164 @@
             padding: 15px;
             border-radius: 5px;
             font-size: 1.2rem;
-            width: 100%; /* 버튼의 너비를 100%로 고정 */
+            width: 100%;
             text-align: center;
+            cursor: pointer;
         }
 
         .btn-menu:hover {
             background-color: #218838;
         }
 
-        /* 드롭다운 목록 스타일 */
-        .dropdown-list {
-            display: none;
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-            border: 1px solid #28a745;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: white;
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
         }
 
-        .dropdown-list li {
-            padding: 10px;
-            border-bottom: 1px solid #e9f7ef;
-        }
-
-        .dropdown-list li:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-list li a {
-            color: #28a745;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-        }
-
-        .dropdown-list li a:hover {
-            background-color: #e9f7ef;
-        }
-
-        /* 추가된 항목을 표시할 공간 */
-        .added-items {
-            margin-top: 20px;
-        }
-
-        /* 파일 업로드 필드를 숨김 */
         .file-upload {
             display: none;
+        }
+
+        /* 서류 추가 버튼 스타일 */
+        .add-file-btn {
+            background-color: #fff;
+            color: #28a745;
+            border: 2px solid #28a745;
+            padding: 10px;
+            font-size: 1.2rem;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 50px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-file-btn i {
+            margin-right: 10px;
+            font-size: 1.4rem;
+        }
+
+        .add-file-btn:hover {
+            background-color: #28a745;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #file-select-container {
+            display: none;
+        }
+
+        .file-added {
             margin-top: 10px;
         }
     </style>
 </head>
-
 <body>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="menu-container text-center">
-            <h2 class="mb-4" style="color: #28a745;">최초 요양 급여신청서</h2>
-
-            <!-- 최초 요양 급여 신청서 버튼 -->
-            <a href="{% url 'apply_injury' %}" class="btn btn-menu">최초 요양 급여 신청서</a>
-
-            <!-- + 버튼 -->
-            <button class="btn btn-menu" onclick="toggleDropdown()">+</button>
-
-            <!-- 선택 리스트 -->
-            <ul id="dropdown-list" class="dropdown-list">
-                <li><a href="#" onclick="addItem('의무기록지/진료비 내역서')">의무기록지/진료비 내역서</a></li>
-                <li><a href="#" onclick="addItem('근 3개월 간의 임금내역(통장사본)')">근 3개월 간의 임금내역(통장사본)</a></li>
-                <li><a href="#" onclick="addItem('목격자 진술서')">목격자 진술서</a></li>
-                <li><a href="#" onclick="addItem('사고 사실확인서')">사고 사실확인서</a></li>
-                <li><a href="#" onclick="addItem('외국인 등록증')">외국인 등록증</a></li>
-            </ul>
-
-            <!-- 추가된 항목들을 표시할 공간 -->
-            <div id="added-items" class="added-items"></div>
-
-            <!-- 파일 첨부 필드 (초기에는 숨김 처리) -->
-            <form method="POST" enctype="multipart/form-data" action="{% url 'success' %}">
-                {% csrf_token %}
-                <div id="file-upload-section"></div>
             
+            <!-- 최초 요양 급여 신청서 이동 버튼 -->
+            <a href="{% url 'apply_injury' %}" class="btn btn-menu">최초 요양 급여 신청서 작성</a>
+
+            <!-- 오류 메시지 표시 -->
+            <p id="error-message" class="error-message" style="display: none;">파일을 선택해 주세요.</p>
+
+            <!-- 파일 제출 폼 -->
+            <form method="POST" enctype="multipart/form-data" action="{% url 'initial_injury_options' %}">
+                {% csrf_token %}
+
+                <!-- + 버튼으로 파일 선택 추가 -->
+                <div class="mb-3">
+                    <button type="button" class="add-file-btn" onclick="showFileSelect()">
+                        <i class="fas fa-plus"></i> + 서류 추가
+                    </button>
+                </div>
+
+                <!-- 서류 선택 목록 -->
+                <div id="file-select-container" class="mb-3">
+                    <label for="file-type" class="form-label">추가할 서류를 선택하세요:</label>
+                    <select id="file-type" class="form-select">
+                        <option value="medical_report">의무기록지/진료비 내역서</option>
+                        <option value="wage_statement">근 3개월 간의 임금내역(통장사본)</option>
+                        <option value="witness_statement">목격자 진술서</option>
+                        <option value="accident_confirmation">사고 사실확인서</option>
+                        <option value="alien_registration">외국인 등록증</option>
+                    </select>
+                    <button type="button" class="add-file-btn mt-2" onclick="addFileInput()">서류 추가하기</button>
+                </div>
+
+                <!-- 추가된 파일 업로드 필드들 -->
+                <div id="file-upload-container" class="file-added"></div>
+
                 <!-- 제출 버튼 -->
-                <button type="submit" class="btn btn-submit w-100 mt-4">제출하기</button>
+                <button type="submit" class="btn btn-success">제출하기</button>
             </form>
         </div>
     </div>
 
-    <!-- JavaScript 코드 -->
     <script>
-        // 드롭다운 리스트를 토글
-        function toggleDropdown() {
-            var dropdown = document.getElementById('dropdown-list');
-            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-                dropdown.style.display = 'block';
-            } else {
-                dropdown.style.display = 'none';
+        let addedFiles = {}; // 이미 추가된 파일 타입을 저장
+
+        function showFileSelect() {
+            document.getElementById('file-select-container').style.display = 'block'; // 서류 선택 목록 보이기
+        }
+
+        function addFileInput() {
+            const selectedFileType = document.getElementById('file-type').value;
+            const fileLabels = {
+                'medical_report': '의무기록지/진료비 내역서',
+                'wage_statement': '근 3개월 간의 임금내역(통장사본)',
+                'witness_statement': '목격자 진술서',
+                'accident_confirmation': '사고 사실확인서',
+                'alien_registration': '외국인 등록증'
+            };
+
+            // 이미 추가된 파일이면 경고
+            if (addedFiles[selectedFileType]) {
+                alert('이미 선택된 서류입니다.');
+                return;
             }
-        }
 
-        // 항목을 추가하고 리스트에서 제거하고 파일 첨부 필드 추가
-        function addItem(itemName) {
-            // 추가된 항목 표시 영역
-            var addedItemsDiv = document.getElementById('added-items');
+            const container = document.getElementById('file-upload-container');
 
-            // 새로운 버튼 생성
-            var newButton = document.createElement('button');
-            newButton.classList.add('btn', 'btn-menu');
-            newButton.textContent = itemName;
-            addedItemsDiv.appendChild(newButton);
+            // 새로운 div 요소 생성
+            const fileDiv = document.createElement('div');
+            fileDiv.classList.add('mb-3', 'file-upload');
+            fileDiv.style.display = 'block';  // 필드를 보이도록 설정
 
-            // 파일 첨부 필드 생성
-            addFileInput(itemName);
+            // 파일 선택 라벨 생성
+            const label = document.createElement('label');
+            label.classList.add('form-label');
+            label.setAttribute('for', selectedFileType);
+            label.textContent = fileLabels[selectedFileType];
 
-            // 드롭다운에서 선택한 항목 제거
-            var links = document.querySelectorAll('#dropdown-list li');
-            links.forEach(function(link) {
-                if (link.textContent === itemName) {
-                    link.style.display = 'none';  // 선택된 항목 숨김
-                }
-            });
-
-            // 드롭다운 리스트를 다시 숨김
-            document.getElementById('dropdown-list').style.display = 'none';
-        }
-
-        // 파일 입력 필드를 추가
-        function addFileInput(itemName) {
-            var fileUploadSection = document.getElementById('file-upload-section');
-
-            var fileInputDiv = document.createElement('div');
-            fileInputDiv.classList.add('file-upload');
-
-            var label = document.createElement('label');
-            label.textContent = itemName + ' 파일 첨부:';
-
-            var input = document.createElement('input');
+            // 파일 선택 입력 필드 생성
+            const input = document.createElement('input');
             input.type = 'file';
-            input.name = itemName.toLowerCase().replace(/ /g, '_');
-            input.accept = 'image/*'; // 이미지 파일만 허용
+            input.name = selectedFileType;
+            input.id = selectedFileType;
+            input.classList.add('form-control');
 
-            fileInputDiv.appendChild(label);
-            fileInputDiv.appendChild(input);
-            fileUploadSection.appendChild(fileInputDiv);
+            // div에 라벨과 파일 입력 필드를 추가
+            fileDiv.appendChild(label);
+            fileDiv.appendChild(input);
+            container.appendChild(fileDiv);
 
-            fileInputDiv.style.display = 'block'; // 필드 표시
+            // 추가된 파일 타입 기록
+            addedFiles[selectedFileType] = true;
+
+            // 서류 선택 목록 숨기기
+            document.getElementById('file-select-container').style.display = 'none';
         }
     </script>
+
+    <!-- Bootstrap JS 및 Font Awesome 아이콘 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </body>
 </html>

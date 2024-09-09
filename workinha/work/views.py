@@ -25,7 +25,7 @@ from .models import *
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.utils.translation import activate, get_language
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import InjuryApplication
 from django.utils.dateparse import parse_date
 
@@ -206,11 +206,7 @@ def apply_injury(request):
         receipt_amount = request.POST.get('receipt_amount')
         payment_source = request.POST.get('payment_source')
         attached_documents = request.FILES.get('attached_documents')
-        medical_report = request.FILES.get('medical_report')
-        wage_statement = request.FILES.get('wage_statement')
-        witness_statement = request.FILES.get('witness_statement')
-        accident_confirmation = request.FILES.get('accident_confirmation')
-        alien_registration = request.FILES.get('alien_registration')
+
 
         # 데이터베이스에 저장
         injury_application = InjuryApplication(
@@ -240,14 +236,9 @@ def apply_injury(request):
             receipt_amount=receipt_amount if receipt_amount else None,
             payment_source=payment_source,
             attached_documents=attached_documents,
-            medical_report=medical_report,  # 의무기록지
-            wage_statement=wage_statement,  # 임금내역서
-            witness_statement=witness_statement,  # 목격자 진술서
-            accident_confirmation=accident_confirmation,  # 사고 사실확인서
-            alien_registration=alien_registration  # 외국인 등록증
         )
 
-       
+        injury_application.save()
         
 
 
@@ -257,86 +248,125 @@ def application_success(request):
     return render(request, 'application_success.html')
 
 def choose_injury_type(request):
-    return render(request, 'choose_injury_type.html')  # 이 페이지에서 최초/승인 후 선택
+    return render(request, 'choose_injury_type.html')  # 최초/승인 후 선택 페이지 렌더링
+
+
+
 
 def initial_injury_options(request):
     if request.method == 'POST':
-        # POST 요청으로부터 데이터 추출
-        name = request.POST.get('name')
-        id_number = request.POST.get('id_number')
-        address = request.POST.get('address')
-        phone = request.POST.get('phone')
-        start_time = request.POST.get('start_time')
-        end_time = request.POST.get('end_time')
-        job_type = request.POST.get('job_type')
-        relation_with_insured = request.POST.get('relation_with_insured')
-        family_relation = request.POST.get('family_relation')
-        application_type = request.POST.get('application_type')
-        business_name = request.POST.get('business_name')
-        business_owner_name = request.POST.get('business_owner_name')
-        business_management_number = request.POST.get('business_management_number')
-        business_address = request.POST.get('business_address')
-        accident_description = request.POST.get('accident_description')
-        checkbox_one = request.POST.get('checkbox_one') == 'on'
-        checkbox_two = request.POST.get('checkbox_two') == 'on'
-        checkbox_three = request.POST.get('checkbox_three') == 'on'
-        witness_name = request.POST.get('witness_name')
-        witness_contact = request.POST.get('witness_contact')
-        witness_relation = request.POST.get('witness_relation')
-        has_received_compensation = request.POST.get('has_received_compensation') == 'on'
-        receipt_date = request.POST.get('receipt_date')
-        receipt_amount = request.POST.get('receipt_amount')
-        payment_source = request.POST.get('payment_source')
-
-        # 파일 필드 처리
+        # POST로 전달된 파일들
         medical_report = request.FILES.get('medical_report')
         wage_statement = request.FILES.get('wage_statement')
         witness_statement = request.FILES.get('witness_statement')
         accident_confirmation = request.FILES.get('accident_confirmation')
         alien_registration = request.FILES.get('alien_registration')
 
-        # InjuryApplication 모델에 데이터를 저장
-        injury_application = InjuryApplication(
-            name=name,
-            id_number=id_number,
-            address=address,
-            phone=phone,
-            start_time=start_time,
-            end_time=end_time,
-            job_type=job_type,
-            relation_with_insured=relation_with_insured,
-            family_relation=family_relation,
-            application_type=application_type,
-            business_name=business_name,
-            business_owner_name=business_owner_name,
-            business_management_number=business_management_number,
-            business_address=business_address,
-            accident_description=accident_description,
-            checkbox_one=checkbox_one,
-            checkbox_two=checkbox_two,
-            checkbox_three=checkbox_three,
-            witness_name=witness_name,
-            witness_contact=witness_contact,
-            witness_relation=witness_relation,
-            has_received_compensation=has_received_compensation,
-            receipt_date=parse_date(receipt_date) if receipt_date else None,
-            receipt_amount=receipt_amount if receipt_amount else None,
-            payment_source=payment_source,
-            medical_report=medical_report,
-            wage_statement=wage_statement,
-            witness_statement=witness_statement,
-            accident_confirmation=accident_confirmation,
-            alien_registration=alien_registration
-        )
+        # 파일 중 하나라도 제출되었는지 확인
+        
+            # DocumentSubmission 객체 생성 및 저장
+        document_submission = DocumentSubmission.objects.create(
+                user=request.user,  # 현재 로그인한 사용자
+                medical_report=medical_report,
+                wage_statement=wage_statement,
+                witness_statement=witness_statement,
+                accident_confirmation=accident_confirmation,
+                alien_registration=alien_registration
+            )
+        document_submission.save()
 
-        # 저장 후 성공 페이지로 리다이렉트
-        injury_application.save()
-        return redirect('success')  # 성공 페이지로 이동
+            # 성공적으로 제출되면 성공 페이지로 리디렉션
+        return redirect('success')
 
-    # GET 요청 시 기본 폼 렌더링
     return render(request, 'initial_injury_options.html')
-
 # 승인 후 절차 세부 항목 페이지
 def post_approval_options(request):
     return render(request, 'post_approval_options.html')  # 승인 후 절차의 세부 항목 선택
 
+def after_apply_injury(request):
+    if request.method == 'POST':
+        # POST 요청에서 데이터 추출
+        name = request.POST.get('name')
+        birth_date = request.POST.get('birth_date')
+        accident_date = request.POST.get('accident_date')
+        change_account = request.POST.get('change_account') == 'on'
+
+        # 계좌 정보
+        bank_name = request.POST.get('bank_name') if change_account else None
+        account_number = request.POST.get('account_number') if change_account else None
+        account_holder = request.POST.get('account_holder') if change_account else None
+        account_type = request.POST.get('account_type') if change_account else None
+
+        # 청구기간
+        claim_start_date = request.POST.get('claim_start_date')
+        claim_end_date = request.POST.get('claim_end_date')
+
+        # 청구 기간 중 취업 여부
+        employment_status = request.POST.get('employment_status')
+
+        # 급여 수령 여부
+        salary_received = request.POST.get('salary_received') == 'on'
+
+        # 동일 사유로 보상 여부
+        received_compensation = request.POST.get('received_compensation') == 'on'
+
+        # 보상 정보
+        compensation_receipt_date = request.POST.get('compensation_receipt_date') if received_compensation else None
+        compensation_amount = request.POST.get('compensation_amount') if received_compensation else None
+        compensation_provider = request.POST.get('compensation_provider') if received_compensation else None
+        compensation_documents = request.FILES.get('compensation_documents') if received_compensation else None
+
+        # 자동 지급 신청 여부
+        auto_payment_request = request.POST.get('auto_payment_request') == 'on'
+
+        # 데이터베이스에 저장
+        afterinjury_application = afterInjuryApplication(
+            name=name,
+            birth_date=parse_date(birth_date),
+            accident_date=parse_date(accident_date),
+            change_account=change_account,
+            bank_name=bank_name,
+            account_number=account_number,
+            account_holder=account_holder,
+            account_type=account_type,
+            claim_start_date=parse_date(claim_start_date),
+            claim_end_date=parse_date(claim_end_date),
+            employment_status=employment_status,
+            salary_received=salary_received,
+            received_compensation=received_compensation,
+            compensation_receipt_date=parse_date(compensation_receipt_date) if compensation_receipt_date else None,
+            compensation_amount=compensation_amount if compensation_amount else None,
+            compensation_provider=compensation_provider,
+            compensation_documents=compensation_documents,
+            auto_payment_request=auto_payment_request,
+        )
+
+        afterinjury_application.save()
+
+    return render(request, 'after_apply.html')  # 신청 폼 페이지 (적절한 페이지로 변경 가능)
+
+def danger(request):
+    return render(request, 'danger.html')
+
+
+
+def initial_after(request):
+    if request.method == 'POST':
+        # POST로 전달된 파일들
+        DisabilityCompensation = request.FILES.get('DisabilityCompensation')
+        Rehabilitation = request.FILES.get('Rehabilitation')
+        VocationalTrainingSupport = request.FILES.get('VocationalTrainingSupport')
+
+            # AfterDocumentSubmission 객체 생성 및 저장
+        document_submission = afterDocumentSubmission.objects.create(
+                user=request.user,  # 현재 로그인한 사용자
+                DisabilityCompensation=DisabilityCompensation,
+                Rehabilitation=Rehabilitation,
+                VocationalTrainingSupport=VocationalTrainingSupport,
+            )
+        document_submission.save()
+
+            # 성공적으로 제출되면 성공 페이지로 리디렉션
+        return redirect('success')
+        
+    return render(request, 'initial_after.html')

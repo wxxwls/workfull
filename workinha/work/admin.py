@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import MyUser, Post, qna, InjuryApplication
+from .models import MyUser, Post, qna, InjuryApplication, DocumentSubmission, afterDocumentSubmission, afterInjuryApplication
 
 class MyUserAdmin(UserAdmin):
     model = MyUser
@@ -28,3 +28,8 @@ admin.site.register(MyUser, MyUserAdmin)
 admin.site.register(Post)
 admin.site.register(qna)
 admin.site.register(InjuryApplication)
+admin.site.register(DocumentSubmission)
+admin.site.register(afterDocumentSubmission)
+admin.site.register(afterInjuryApplication)
+
+

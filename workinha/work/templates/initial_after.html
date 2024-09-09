@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>최초 요양 급여 신청서</title>
+    <title>휴업급여청구서</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -86,18 +87,19 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="menu-container text-center">
             
             <!-- 최초 요양 급여 신청서 이동 버튼 -->
-            <a href="{% url 'after_apply_injury' %}" class="btn btn-menu">최초 요양 급여 신청서 작성</a>
+            <a href="{% url 'after_apply_injury' %}" class="btn btn-menu">휴업급여신청서 작성</a>
 
             <!-- 오류 메시지 표시 -->
             <p id="error-message" class="error-message" style="display: none;">파일을 선택해 주세요.</p>
 
             <!-- 파일 제출 폼 -->
-            <form method="POST" enctype="multipart/form-data" action="{% url 'post_approval_options' %}">
+            <form method="POST" enctype="multipart/form-data" action="{% url 'initial_after' %}">
                 {% csrf_token %}
 
                 <!-- + 버튼으로 파일 선택 추가 -->
@@ -111,11 +113,9 @@
                 <div id="file-select-container" class="mb-3">
                     <label for="file-type" class="form-label">추가할 서류를 선택하세요:</label>
                     <select id="file-type" class="form-select">
-                        <option value="medical_report">의무기록지/진료비 내역서</option>
-                        <option value="wage_statement">근 3개월 간의 임금내역(통장사본)</option>
-                        <option value="witness_statement">목격자 진술서</option>
-                        <option value="accident_confirmation">사고 사실확인서</option>
-                        <option value="alien_registration">외국인 등록증</option>
+                        <option value="DisabilityCompensation">장해급여신청서</option>
+                        <option value="Rehabilitation">재요양신청서</option>
+                        <option value="VocationalTrainingSupport">직업전환훈련지원신청서</option>
                     </select>
                     <button type="button" class="add-file-btn mt-2" onclick="addFileInput()">서류 추가하기</button>
                 </div>
@@ -139,11 +139,10 @@
         function addFileInput() {
             const selectedFileType = document.getElementById('file-type').value;
             const fileLabels = {
-                'medical_report': '의무기록지/진료비 내역서',
-                'wage_statement': '근 3개월 간의 임금내역(통장사본)',
-                'witness_statement': '목격자 진술서',
-                'accident_confirmation': '사고 사실확인서',
-                'alien_registration': '외국인 등록증'
+                'DisabilityCompensation': '장해급여신청서',
+                'Rehabilitation': '재요양신청서',
+                'VocationalTrainingSupport': '직업전환훈련지원신청서'
+
             };
 
             // 이미 추가된 파일이면 경고
@@ -186,7 +185,7 @@
     </script>
 
     <!-- Bootstrap JS 및 Font Awesome 아이콘 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 </body>
+
 </html>
