@@ -6,35 +6,39 @@
     <title>외국인 지원센터 위치</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Noto Sans KR', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f9f0;
+            background-color: #fafafa;
+            color: #333;
         }
 
         h1 {
             text-align: center;
-            color: #2d7a2d;
+            color: #009688;
             padding: 20px 0;
             font-size: 24px;
+            font-weight: 700;
+            margin: 0;
         }
 
         #map {
             width: 100%;
             height: 400px;
+            margin-bottom: 20px;
         }
 
         .center-list {
-            padding: 20px;
+            padding: 15px;
         }
 
         .region {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             margin-top: 15px;
-            color: #2d7a2d;
-            border-bottom: 2px solid #2d7a2d;
-            padding-bottom: 5px;
+            padding: 10px 0;
+            color: #009688;
+            border-bottom: 2px solid #009688;
         }
 
         ul {
@@ -45,14 +49,30 @@
 
         ul li {
             font-size: 16px;
-            margin-bottom: 5px;
-            color: #2d7a2d;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: block;
+        }
+
+        ul li:hover {
+            background-color: #e0f7fa;
+            transform: translateY(-2px);
         }
 
         /* 반응형 레이아웃 */
         @media screen and (max-width: 768px) {
             h1 {
-                font-size: 20px;
+                font-size: 22px;
             }
 
             #map {
@@ -60,7 +80,7 @@
             }
 
             .region {
-                font-size: 18px;
+                font-size: 16px;
             }
 
             ul li {
@@ -72,11 +92,10 @@
         .customoverlay {
             position: relative;
             bottom: 85px;
-            border-radius: 6px;
-            border: 1px solid #2d7a2d;
-            border-bottom: 2px solid #2d7a2d;
+            border-radius: 8px;
+            border: 1px solid #009688;
             float: left;
-            box-shadow: 0px 1px 2px rgba(0, 128, 0, 0.5);
+            box-shadow: 0px 1px 2px rgba(0, 128, 0, 0.2);
         }
 
         .customoverlay a {
@@ -84,21 +103,20 @@
             text-decoration: none;
             color: #fff;
             text-align: center;
-            border-radius: 6px;
             font-size: 14px;
             font-weight: bold;
-            overflow: hidden;
-            background-color: #2d7a2d;
+            background-color: #009688;
+            padding: 10px 15px;
+            border-radius: 8px 8px 0 0;
         }
 
         .customoverlay .title {
-            display: block;
-            text-align: center;
             background: #fff;
-            color: #2d7a2d;
-            padding: 10px 15px;
+            color: #009688;
+            padding: 5px 10px;
             font-size: 14px;
-            font-weight: bold;
+            font-weight: 600;
+            border-radius: 8px;
         }
 
         .customoverlay:after {
@@ -110,6 +128,20 @@
             width: 22px;
             height: 12px;
             background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+        }
+
+        /* 스크롤 디자인 개선 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #009688;
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
@@ -128,14 +160,14 @@
             <li><a href="https://www.facebook.com/EP.EMWC/" target="_blank">은평외국인노동자센터</a> - 서울 은평구 은평로21길 14-26 3층 Tel: 02-359-3410</li>
             <li><a href="https://k.migrantok.org/" target="_blank">한국외국인노동자지원센터</a> - 서울특별시 영등포구 도림로 129 304호 Tel: 010-8733-5078</li>
         </ul>
-        
+
         <div class="region">인천</div>
         <ul>
             <li><a href="http://www.msisc.net/" target="_blank">이주민사회통합지원센터</a> - 경기도 군포시 한세로 한세대학교 비전관 107호(당정동) Tel: 032-773-0909</li>
             <li><a href="https://www.iscfr.or.kr/" target="_blank">인천외국인종합지원센터</a> - 인천광역시 남동구 예술로 192번길 40, 8층 Tel: 1833-6333</li>
             <li><a href="http://www.icff.or.kr/" target="_blank">인천외국인근로자지원센터</a> - 인천 남동구 호구포로 220, 11, 12층 (논현동, 명진프라자) Tel: 032-231-4546</li>
         </ul>
-        
+
         <div class="region">경기</div>
         <ul>
             <li><a href="https://www.hanam.go.kr/cleanh/cleanhBbsNttWebView.do?key=4348&nttNo=1793" target="_blank">하남외국인지원센터</a> - 경기도 하남시 신장로 195 2층 Tel: 010-5218-4808</li>
@@ -143,7 +175,7 @@
             <li><a href="https://gmhr-lms.or.kr/" target="_blank">경기도외국인인권지원센터</a> - 경기도 안산시 단원구 화정로 26, 4층 Tel: 031-492-9347</li>
             <li><a href="http://www.dfsc.or.kr/" target="_blank">의정부외국인노동자지원센터</a> - 경기 의정부시 경의로 94 대자빌딩 Tel: 031-838-9111</li>
         </ul>
-        
+
         <div class="region">충청</div>
         <ul>
             <li>천안외국인노동자지원센터 - 충남 천안시 서북구 성정공원5로 21 Tel: 041-411-7000</li>
@@ -151,7 +183,7 @@
             <li>음성군외국인노동자지원센터 - 충북 음성군 대소면 오태로 57-16 대소면 행정복지센터 3층 Tel: 0507-1376-2707</li>
             <li>음성군외국인근로자상담지원센터 - 충북 음성군 음성읍 수정로 42 Tel: 043-872-1161</li>
         </ul>
-        
+
         <div class="region">전라</div>
         <ul>
             <li>전주시외국인노동자지원센터 - 전북 전주시 덕진구 팔달로 336</li>
@@ -159,7 +191,7 @@
             <li>외국인노동자지원센터 김제 - 전북 김제시 중앙로 57</li>
             <li><a href="https://www.yeosu.go.kr/www/sphere/welfare/foreigner" target="_blank">여수외국인노동자지원센터</a> - 전남 여수시 동문로 104 Tel: 061-692-4174</li>
         </ul>
-        
+
         <div class="region">경상</div>
         <ul>
             <li><a href="https://www.mfwc.or.kr/2023/main.php" target="_blank">창원외국인근로자지원센터</a> - 경상남도 창원시 마산합포구 3·15 대로 203(중앙동 2가) Tel: 055-714-1093</li>
@@ -167,23 +199,23 @@
             <li><a href="https://ysfc.or.kr/" target="_blank">외국인근로자지원센터 양산센터</a> - 경상남도 양산시 연호로 28 Tel: 055-912-0255</li>
             <li><a href="http://www.dfwc.or.kr/" target="_blank">대구외국인근로자지원센터</a> - 대구광역시 달성군 다사읍 달구벌대로 863 진광타워 8-9층 Tel: 053-654-9700</li>
         </ul>
-        
+
         <div class="region">부산</div>
         <ul>
             <li><a href="http://www.bfwc.or.kr/" target="_blank">부산외국인근로자지원센터</a> - 부산광역시 사상구 사상로 448(모라동) 부산은행 3층 Tel: 051-304-0900</li>
             <li>다문화, 외국인 행복지원센터 - 경남 창원시 마산합포구 3·15대로 6 4층 Tel: 0507-1375-2905</li>
         </ul>
-        
+
         <div class="region">강원</div>
         <ul>
             <li><a href="https://www.gnscfw.org/" target="_blank">강릉시외국인근로자지원센터</a> - 강원도 강릉시 옥가로19번길 26 Tel: 033-655-8956</li>
         </ul>
-        
+
         <div class="region">충남</div>
         <ul>
             <li><a href="https://www.facebook.com/djfwc2017" target="_blank">당진시외국인근로자지원센터</a> - 충남 당진시 밤절로 149 당진공영버스터미널내 Tel: 041-352-6400</li>
         </ul>
-        
+
     </div>
 
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=48a34e225f37ee0d0650c8fb0cb979fc"></script>
@@ -196,7 +228,6 @@
 
         var map = new kakao.maps.Map(mapContainer, mapOption);
 
-        // 위치 배열
         var locations = [
             {title: '이주민사회통합지원센터', lat: 37.464484804590064, lng: 126.67585528910972},
             {title: '인천외국인종합지원센터', lat: 37.4507947690731, lng: 126.7036143648615},
@@ -233,7 +264,6 @@
             {title: '음성군외국인근로자상담지원센터', lat: 36.93434857425923, lng: 127.69103845360875}
         ];
 
-        // 마커 및 오버레이 생성
         locations.forEach(function(location) {
             var markerPosition = new kakao.maps.LatLng(location.lat, location.lng);
 
@@ -259,4 +289,3 @@
     </script>
 </body>
 </html>
-
