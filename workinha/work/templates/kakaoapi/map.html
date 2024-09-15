@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>외국인 지원센터 위치</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f9f0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d7a2d;
+            padding: 20px 0;
+            font-size: 24px;
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+
+        .center-list {
+            padding: 20px;
+        }
+
+        .region {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #2d7a2d;
+            border-bottom: 2px solid #2d7a2d;
+            padding-bottom: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        ul li {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #2d7a2d;
+        }
+
+        /* 반응형 레이아웃 */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            #map {
+                height: 300px;
+            }
+
+            .region {
+                font-size: 18px;
+            }
+
+            ul li {
+                font-size: 14px;
+            }
+        }
+
+        /* 커스텀 오버레이 스타일 */
+        .customoverlay {
+            position: relative;
+            bottom: 85px;
+            border-radius: 6px;
+            border: 1px solid #2d7a2d;
+            border-bottom: 2px solid #2d7a2d;
+            float: left;
+            box-shadow: 0px 1px 2px rgba(0, 128, 0, 0.5);
+        }
+
+        .customoverlay a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            overflow: hidden;
+            background-color: #2d7a2d;
+        }
+
+        .customoverlay .title {
+            display: block;
+            text-align: center;
+            background: #fff;
+            color: #2d7a2d;
+            padding: 10px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .customoverlay:after {
+            content: '';
+            position: absolute;
+            margin-left: -12px;
+            left: 50%;
+            bottom: -12px;
+            width: 22px;
+            height: 12px;
+            background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png');
+        }
+    </style>
+</head>
+<body>
+
+    <h1>외국인 지원센터 위치</h1>
+
+    <div id="map"></div>
+
+    <div class="center-list">
+        <div class="region">서울</div>
+        <ul>
+            <li><a href="https://global.seoul.go.kr/web/main.do" target="_blank">서울외국인지원센터</a> - 서울특별시 영등포구 도신로 40 (대림동 604-30) Tel: 02-2229-4900</li>
+            <li><a href="https://global.seoul.go.kr/yeonnam/" target="_blank">연남글로벌빌리지센터</a> - 서울 마포구 동교로 219 수성빌딩 3층 Tel: 02-6406-8151</li>
+            <li><a href="https://www.itaewongvc.com/" target="_blank">이태원글로벌빌리지센터</a> - 서울 용산구 이태원로27가길 54-14 지층 B1 Tel: 02-2199-8883</li>
+            <li><a href="https://www.facebook.com/EP.EMWC/" target="_blank">은평외국인노동자센터</a> - 서울 은평구 은평로21길 14-26 3층 Tel: 02-359-3410</li>
+            <li><a href="https://k.migrantok.org/" target="_blank">한국외국인노동자지원센터</a> - 서울특별시 영등포구 도림로 129 304호 Tel: 010-8733-5078</li>
+        </ul>
+        
+        <div class="region">인천</div>
+        <ul>
+            <li><a href="http://www.msisc.net/" target="_blank">이주민사회통합지원센터</a> - 경기도 군포시 한세로 한세대학교 비전관 107호(당정동) Tel: 032-773-0909</li>
+            <li><a href="https://www.iscfr.or.kr/" target="_blank">인천외국인종합지원센터</a> - 인천광역시 남동구 예술로 192번길 40, 8층 Tel: 1833-6333</li>
+            <li><a href="http://www.icff.or.kr/" target="_blank">인천외국인근로자지원센터</a> - 인천 남동구 호구포로 220, 11, 12층 (논현동, 명진프라자) Tel: 032-231-4546</li>
+        </ul>
+        
+        <div class="region">경기</div>
+        <ul>
+            <li><a href="https://www.hanam.go.kr/cleanh/cleanhBbsNttWebView.do?key=4348&nttNo=1793" target="_blank">하남외국인지원센터</a> - 경기도 하남시 신장로 195 2층 Tel: 010-5218-4808</li>
+            <li><a href="https://foreigner.seongnam.go.kr:10025/main/index.asp" target="_blank">성남시 외국인 주민복지지원센터</a> - 경기도 성남시 수정구 수정남로 10, 제일프라자 2층 Tel: 031-754-7070</li>
+            <li><a href="https://gmhr-lms.or.kr/" target="_blank">경기도외국인인권지원센터</a> - 경기도 안산시 단원구 화정로 26, 4층 Tel: 031-492-9347</li>
+            <li><a href="http://www.dfsc.or.kr/" target="_blank">의정부외국인노동자지원센터</a> - 경기 의정부시 경의로 94 대자빌딩 Tel: 031-838-9111</li>
+        </ul>
+        
+        <div class="region">충청</div>
+        <ul>
+            <li>천안외국인노동자지원센터 - 충남 천안시 서북구 성정공원5로 21 Tel: 041-411-7000</li>
+            <li>충북외국인이주노동자지원센터 - 충청북도 진천군 진천읍 벽암리 569</li>
+            <li>음성군외국인노동자지원센터 - 충북 음성군 대소면 오태로 57-16 대소면 행정복지센터 3층 Tel: 0507-1376-2707</li>
+            <li>음성군외국인근로자상담지원센터 - 충북 음성군 음성읍 수정로 42 Tel: 043-872-1161</li>
+        </ul>
+        
+        <div class="region">전라</div>
+        <ul>
+            <li>전주시외국인노동자지원센터 - 전북 전주시 덕진구 팔달로 336</li>
+            <li><a href="https://www.facebook.com/jbtogether" target="_blank">전북외국인근로자지원센터</a> - 전북 전주시 완산구 홍산로 276 6층 Tel: 1551-1195</li>
+            <li>외국인노동자지원센터 김제 - 전북 김제시 중앙로 57</li>
+            <li><a href="https://www.yeosu.go.kr/www/sphere/welfare/foreigner" target="_blank">여수외국인노동자지원센터</a> - 전남 여수시 동문로 104 Tel: 061-692-4174</li>
+        </ul>
+        
+        <div class="region">경상</div>
+        <ul>
+            <li><a href="https://www.mfwc.or.kr/2023/main.php" target="_blank">창원외국인근로자지원센터</a> - 경상남도 창원시 마산합포구 3·15 대로 203(중앙동 2가) Tel: 055-714-1093</li>
+            <li><a href="http://www.gimhaekorea.or.kr/" target="_blank">김해외국인근로자지원센터</a> - 경상남도 김해시 가락로 81 아이조이빌딩 6-7F Tel: 055-724-2725</li>
+            <li><a href="https://ysfc.or.kr/" target="_blank">외국인근로자지원센터 양산센터</a> - 경상남도 양산시 연호로 28 Tel: 055-912-0255</li>
+            <li><a href="http://www.dfwc.or.kr/" target="_blank">대구외국인근로자지원센터</a> - 대구광역시 달성군 다사읍 달구벌대로 863 진광타워 8-9층 Tel: 053-654-9700</li>
+        </ul>
+        
+        <div class="region">부산</div>
+        <ul>
+            <li><a href="http://www.bfwc.or.kr/" target="_blank">부산외국인근로자지원센터</a> - 부산광역시 사상구 사상로 448(모라동) 부산은행 3층 Tel: 051-304-0900</li>
+            <li>다문화, 외국인 행복지원센터 - 경남 창원시 마산합포구 3·15대로 6 4층 Tel: 0507-1375-2905</li>
+        </ul>
+        
+        <div class="region">강원</div>
+        <ul>
+            <li><a href="https://www.gnscfw.org/" target="_blank">강릉시외국인근로자지원센터</a> - 강원도 강릉시 옥가로19번길 26 Tel: 033-655-8956</li>
+        </ul>
+        
+        <div class="region">충남</div>
+        <ul>
+            <li><a href="https://www.facebook.com/djfwc2017" target="_blank">당진시외국인근로자지원센터</a> - 충남 당진시 밤절로 149 당진공영버스터미널내 Tel: 041-352-6400</li>
+        </ul>
+        
+    </div>
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=48a34e225f37ee0d0650c8fb0cb979fc"></script>
+    <script>
+        var mapContainer = document.getElementById('map'),
+            mapOption = { 
+                center: new kakao.maps.LatLng(37.54699, 127.09598),
+                level: 8
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        // 위치 배열
+        var locations = [
+            {title: '이주민사회통합지원센터', lat: 37.464484804590064, lng: 126.67585528910972},
+            {title: '인천외국인종합지원센터', lat: 37.4507947690731, lng: 126.7036143648615},
+            {title: '인천외국인근로자지원센터', lat: 37.40232315624291, lng: 126.71025720913005},
+            {title: '서울외국인지원센터', lat: 37.49736958092975, lng: 126.8629826278952},
+            {title: '하남외국인지원센터', lat: 37.54256551089926, lng: 127.19915638930144},
+            {title: '한국외국인노동자지원센터', lat: 37.479061809632114, lng: 126.89437269666493},
+            {title: '경기도외국인인권지원센터', lat: 37.33229545749189, lng: 126.79020936379318},
+            {title: '의정부외국인노동자지원센터', lat: 37.73282790368492, lng: 127.04577700230804},
+            {title: '성남시 외국인 주민복지지원센터', lat: 37.43903341966815, lng: 127.12923839589651},
+            {title: '연남글로벌빌리지센터', lat: 37.55967222892405, lng: 126.92352162008174},
+            {title: '외국공공기관취업지원센터', lat: 37.48433330743131, lng: 127.0192466602613},
+            {title: '이태원글로벌빌리지센터', lat: 37.53550490397602, lng: 126.99193571735775},
+            {title: '은평외국인노동자센터', lat: 37.602744766562544, lng: 126.93175575379136},
+            {title: '천안외국인노동자지원센터', lat: 36.82822085839334, lng: 127.14011921470559},
+            {title: '음성군외국인노동자지원센터', lat: 36.971932424919345, lng: 127.48329392772271},
+            {title: '창원외국인근로자지원센터', lat: 35.19626755645158, lng: 128.56681690798212},
+            {title: '다문화, 외국인 행복지원센터', lat: 35.180267654114004, lng: 128.55883401466727},
+            {title: '김해외국인근로자지원센터', lat: 35.23383481695192, lng: 128.8812499163207},
+            {title: '외국인근로자지원센터 양산센터', lat: 35.416699872868634, lng: 129.17385890395656},
+            {title: '대구외국인근로자지원센터', lat: 35.85896237449754, lng: 128.46437828025583},
+            {title: '충북외국인이주노동자지원센터', lat: 36.85898378823318, lng: 127.4511301440362},
+            {title: '전주시외국인노동자지원센터', lat: 35.83059139969077, lng: 127.1395726653028},
+            {title: '전북외국인근로자지원센터', lat: 35.81821948364861, lng: 127.10642339085501},
+            {title: '외국인노동자지원센터 김제', lat: 35.80538205409455, lng: 126.88259354098209},
+            {title: '부산외국인근로자지원센터', lat: 35.17501676410785, lng: 129.08037235982016},
+            {title: '강릉시외국인근로자지원센터', lat: 37.75954033347273, lng: 128.89695781961396},
+            {title: '포항이주노동자센터', lat: 35.97983153063457, lng: 129.36383244043506},
+            {title: '경주외국인근로자지원센터', lat: 35.855871425798355, lng: 129.2193347612201},
+            {title: '당진시외국인근로자지원센터', lat: 36.90245116974789, lng: 126.64624286791484},
+            {title: '달성외국인근로자지원센터', lat: 35.72970676721769, lng: 128.4540311775064},
+            {title: '칠곡군외국인근로자지원센터', lat: 35.96695790351896, lng: 128.4177615783996},
+            {title: '여수외국인노동자지원센터', lat: 34.745595376078995, lng: 127.74283573134255},
+            {title: '음성군외국인근로자상담지원센터', lat: 36.93434857425923, lng: 127.69103845360875}
+        ];
+
+        // 마커 및 오버레이 생성
+        locations.forEach(function(location) {
+            var markerPosition = new kakao.maps.LatLng(location.lat, location.lng);
+
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+
+            marker.setMap(map);
+
+            var content = '<div class="customoverlay">' +
+                          '  <a href="https://map.kakao.com/link/map/' + location.title + '" target="_blank">' +
+                          '    <span class="title">' + location.title + '</span>' +
+                          '  </a>' +
+                          '</div>';
+
+            var customOverlay = new kakao.maps.CustomOverlay({
+                map: map,
+                position: markerPosition,
+                content: content,
+                yAnchor: 1 
+            });
+        });
+    </script>
+</body>
+</html>
+

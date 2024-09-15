@@ -370,3 +370,4 @@ def initial_after(request):
         return redirect('success')
         
     return render(request, 'initial_after.html')
+

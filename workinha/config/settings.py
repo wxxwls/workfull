@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 LANGUAGES = [
-    ('en', _('English')),
-    ('ko', _('Korean')),
-    ('vi', _('Vietnamese')),
+    ('ko', 'Korean'),
+    ('en', 'English'),
+    ('vi', 'Vietnamese'),
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -62,7 +62,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR/ 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -144,7 +144,7 @@ LANGUAGE_CODE = 'ko-kr' # 언어를 한국어로 변경해줍니다
 TIME_ZONE = 'Asia/Seoul' # 시간대를 서울로 변경해줍니다
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
@@ -169,4 +169,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOCALE_PATHS = [
     os.path.join(BASE_DIR, 'locale'),
 ]
+
+
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10 * 1024 * 1024 (10MB)
