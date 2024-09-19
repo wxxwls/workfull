@@ -22,6 +22,12 @@ urlpatterns = [
     path('success/', views.application_success, name='success'),  # 신청 성공 페이지
     path('apply-injury/after/', views.after_apply_injury, name='after_apply_injury'),  # 승인 후 신청 페이지
     path('apply-injury/danger/', views.danger, name='danger'),  # 경고 메시지 페이지
+    path('apply-injury/dangerer/', views.dangerer, name='dangerer'),  # 경고 메시지 페이지
     path('apply-injury/initial-after/', views.initial_after, name='initial_after'),  # 최초 요양 급여신청서 세부 옵션 페이지
+    path('info1/',views.info1, name='info1'),
+    path('info2/',views.info2, name='info2'),
+    path('info3/',views.info3, name='info3'),
+    path('info4/',views.info4, name='info4'),
+    path('info5/',views.info5, name='info5')
 ]
 

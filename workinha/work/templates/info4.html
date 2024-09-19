@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>산업재해 보상보험</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        img {
+            width: 600px;
+            height: auto;
+        }
+        .continue {
+            color: white;
+            background-color: green;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="{% static '4.png' %}" alt="산업재해 보상보험">
+        <div>
+            <!-- Django의 URL 리버싱 기능을 사용하여 info2로 이동 -->
+            <a href="{% url 'info5' %}" class="continue">계속하기</a>
+        </div>
+    </div>
+
+</body>
+</html>

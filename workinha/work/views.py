@@ -28,6 +28,8 @@ from django.utils.translation import activate, get_language
 from django.shortcuts import render
 from .models import InjuryApplication
 from django.utils.dateparse import parse_date
+from django.utils import translation
+
 
 def signup(request):
     if request.method == 'POST':
@@ -62,7 +64,7 @@ def login_view(request):
                 login(request, user)
                 
                 # '/category/' 페이지로 리디렉션
-                return redirect('category')
+                return redirect('info1')
                 
             else:
                 # 잘못된 자격 증명 오류 메시지 반환
@@ -370,4 +372,29 @@ def initial_after(request):
         return redirect('success')
         
     return render(request, 'initial_after.html')
+
+def change_language(request):
+    if request.method == 'POST':
+        selected_language = request.POST.get('language')
+        if selected_language:
+            translation.activate(selected_language)
+            request.session[translation.LANGUAGE_SESSION_KEY] = selected_language
+    return redirect('home')  # 해당 페이지로 리디렉션
+
+def info1(request):
+    return render(request, 'info1.html') 
+def info2(request):
+    return render(request, 'info2.html') 
+def info3(request):
+    return render(request, 'info3.html') 
+def info4(request):
+    return render(request, 'info4.html') 
+def info5(request):
+    return render(request, 'info5.html') 
+
+def dangerer(request):
+    return render(request, 'dangerer.html')
+
+
+
 

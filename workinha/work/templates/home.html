@@ -160,7 +160,7 @@
                                         <option value="{{ code }}" {% if current_language == code %}selected{% endif %}>{{ name }}</option>
                                     {% endfor %}
                                 </select>
-                                <button type="submit" class="btn btn-outline-primary">언어 변경</button>
+                                <button type="submit" class="btn btn-outline-primary">{% trans "언어 변경" %}</button>
                             </div>
                         </form>
                     </div>
@@ -169,10 +169,10 @@
                 <!-- 로그인 및 회원가입 버튼을 아래로 배치 -->
                 <div class="mt-4">
                     <!-- 로그인 버튼 -->
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg">로그인</a>
+                    <a href="{% url 'login' %}" class="btn btn-primary btn-lg">{% trans "로그인" %}</a>
 
                     <!-- 회원가입 버튼 -->
-                    <a href="{% url 'signup' %}" class="btn btn-secondary btn-lg">회원가입</a>
+                    <a href="{% url 'signup' %}" class="btn btn-secondary btn-lg">{% trans "회원가입" %}</a>
                 </div>
             </div>
         </div>
