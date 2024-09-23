@@ -18,6 +18,11 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
+        p {
+            margin-bottom: 1rem; /* 문단 간격 조정 */
+            line-height: 1.6; /* 줄 간격 조정 */
+        }
     </style>
 </head>
 
@@ -25,10 +30,11 @@
     <div class="container">
         <div class="post-container">
             <h1 class="mb-4" style="color: #28a745;">{{ post.title }}</h1>
+            <!-- 문단 태그로 구분 -->
             <p>{{ post.content }}</p>
             <hr>
             <div>
-               
+                <!-- 여기에 추가 내용이 들어갑니다 -->
             </div>
         </div>
     </div>
