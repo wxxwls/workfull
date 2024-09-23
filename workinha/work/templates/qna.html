@@ -37,28 +37,54 @@
 
 <body>
     <div class="container">
-        <h2 class="text-center my-4" style="color: #28a745;">자주 묻는 질문</h2>
+        <h2 class="text-center my-4" style="color: black">자주 묻는 질문</h2>
         <div class="qna-container">
             {% for item in qna_list %}
                 <!-- 첫 번째 질문과 답변 -->
-                <div class="question" onclick="toggleAnswer('answer1-{{ item.id }}')">Q1: {{ item.title1 }}</div>
-                <div class="answer" id="answer1-{{ item.id }}">A1: {{ item.content1 }}</div>
+                <div class="question" onclick="toggleAnswer('answer1-{{ item.id }}')">Q: 3개월째 임금을 받지 못하고 있습니다. 사업주는 기다려달라고 하는데 이런 경우 어떻게 하면 체불임금을 받을 수 있을까요?</div>
+                <div class="answer" id="answer1-{{ item.id }}">
+                    임금체불이란 사업주가 임금지급일에 임금을 지급하지 않는 것을 말합니다. 체불임금에 대한 법적인 대처 방법은 두 가지가 있습니다.
+                    <br><br>
+                    첫째, 관할 지방고용노동지청에 민원을 제기하는 방법입니다. 고용노동지청에 진정을 넣으면 사업주에게 밀린 임금을 지급하라는 지시가 내려질 수 있습니다. 
+                    <br><br>
+                    둘째, 민사소송을 통해 임금채권을 청구할 수 있습니다. 이는 사업주가 지급을 거부하는 경우 법적 절차를 통해 강제로 받을 수 있는 방법입니다.
+                    <br><br>
+                    ※ 고용노동지청에 민원을 제기하거나, 소송 절차를 통해 해결할 수 있습니다. 보증보험이 가입된 경우 최대 200만 원 한도 내에서 체불임금의 일부를 보상받을 수 있습니다.
+                </div>
 
                 <!-- 두 번째 질문과 답변 -->
-                <div class="question" onclick="toggleAnswer('answer2-{{ item.id }}')">Q2: {{ item.title2 }}</div>
-                <div class="answer" id="answer2-{{ item.id }}">A2: {{ item.content2 }}</div>
+                <div class="question" onclick="toggleAnswer('answer2-{{ item.id }}')">Q: 사업주가 반대하는 산재신청을 하면 사업주가 해당 근로자에게 불이익한 대우를 할까 걱정입니다.
+                </div>
+                <div class="answer" id="answer2-{{ item.id }}">
+                    산업재해보상보험법에 따르면 사업주는 근로자가 산재 신청을 했다는 이유로 불이익을 줄 수 없습니다. 
+                    <br><br>
+                    만약 불이익을 주는 경우, 해당 사업주는 법적 제재를 받을 수 있습니다. 이에 따라 산재 신청을 하더라도 불이익을 걱정하지 않으셔도 됩니다.
+                </div>
 
                 <!-- 세 번째 질문과 답변 -->
-                <div class="question" onclick="toggleAnswer('answer3-{{ item.id }}')">Q3: {{ item.title3 }}</div>
-                <div class="answer" id="answer3-{{ item.id }}">A3: {{ item.content3 }}</div>
+                <div class="question" onclick="toggleAnswer('answer3-{{ item.id }}')">Q: 회사가 부도나서 월급, 퇴직금을 받지 못하고 퇴사처리 되었습니다. 사업주와 연락이 되지 않는데 어떻게 해야 하나요?
+                </div>
+                <div class="answer" id="answer3-{{ item.id }}">
+                    사업주의 부도 등으로 임금과 퇴직금을 받지 못한 경우 체당금 제도를 통해 구제받을 수 있습니다. 
+                    <br><br>
+                    체당금은 임금채권보장법에 의해 근로복지공단이 사업주 대신 일정 금액을 지급하는 제도입니다. 파산선고나 도산 인정을 받은 사업장의 경우 일정 요건을 충족하면 체당금을 받을 수 있습니다.
+                </div>
 
                 <!-- 네 번째 질문과 답변 -->
-                <div class="question" onclick="toggleAnswer('answer4-{{ item.id }}')">Q4: {{ item.title4 }}</div>
-                <div class="answer" id="answer4-{{ item.id }}">A4: {{ item.content4 }}</div>
+                <div class="question" onclick="toggleAnswer('answer4-{{ item.id }}')">Q: 근로계약서에는 09:00~18:00로 근무시간이 정해져 있는데, 07:00~22:00까지 일을 시키고 임금은 계약금액만 줍니다.
+                </div>
+                <div class="answer" id="answer4-{{ item.id }}">
+                    근로기준법에 따르면 법정 근로시간을 초과한 근로에 대해서는 초과 시간에 대한 추가 임금을 지급해야 합니다. 
+                    <br><br>
+                    계약에 명시된 근무시간을 초과하여 일을 시킨 경우, 초과 근로에 대해 사용자는 추가 임금을 지급할 의무가 있습니다. 상시 근로자 수 5인 이상 사업장은 초과 근로에 대해 150%의 시간급을 적용해야 합니다.
+                </div>
 
                 <!-- 다섯 번째 질문과 답변 -->
-                <div class="question" onclick="toggleAnswer('answer5-{{ item.id }}')">Q5: {{ item.title5 }}</div>
-                <div class="answer" id="answer5-{{ item.id }}">A5: {{ item.content5 }}</div>
+                <div class="question" onclick="toggleAnswer('answer5-{{ item.id }}')">Q: 산업재해로 보상을 받은 후, 추가로 상해보험에서 보상받을 수 있나요?
+                </div>
+                <div class="answer" id="answer5-{{ item.id }}">
+                    산업재해 보상을 받은 후에는 상해보험에서 추가로 보상받을 수 없습니다. 상해보험은 업무 외 상해를 보상하는 것이기 때문에, 산재에 해당되는 상해는 상해보험에서 보상되지 않습니다.
+                </div>
             {% endfor %}
         </div>
     </div>

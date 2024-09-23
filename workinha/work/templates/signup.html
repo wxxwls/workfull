@@ -96,8 +96,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="phone_number" class="form-label">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="^01[0-9]-\d{3,4}-\d{4}$" required>
-                            <small class="form-text text-muted">Format: 010-1234-5678</small>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number" pattern="^01[0-9]{8,9}$" required>
+                            <small class="form-text text-muted">Format: 01012345678</small>
+
                         </div>
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary">Sign Up</button>

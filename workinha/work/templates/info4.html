@@ -18,8 +18,10 @@
             max-width: 90%;
         }
         img {
-            max-width: 100%;
-            height: auto;
+            width: 100%; /* 이미지가 컨테이너 너비에 맞춰짐 */
+            height: auto; /* 비율이 유지되면서 크기 조절 */
+            object-fit: contain; /* 이미지가 잘리지 않도록 함 */
+            max-height: 80vh; /* 화면 높이의 80%를 넘지 않도록 제한 */
         }
         .continue {
             color: white;

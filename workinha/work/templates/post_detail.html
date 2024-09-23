@@ -31,9 +31,9 @@
         <div class="post-container">
             <h1 class="mb-4" style="color: #28a745;">{{ post.title }}</h1>
             
-           
-            <p>{{ post.content | linebreaksbr }}</p>
-
+            <!-- 여기서 linebreaks 필터를 사용하여 문단을 나눔 -->
+            {{ post.content | linebreaks }}
+            
             <hr>
             <div>
                 
