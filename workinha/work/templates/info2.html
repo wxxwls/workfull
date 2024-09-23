@@ -10,23 +10,35 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             text-align: center;
+            margin: 0;
+            padding: 0;
         }
         .container {
-            margin-top: 50px;
+            margin: 50px auto;
+            max-width: 90%;
         }
         img {
-            width: 600px;
+            max-width: 100%;
             height: auto;
         }
         .continue {
             color: white;
             background-color: green;
-            padding: 20px 40px;
-            font-size: 1.5em;
+            padding: 15px 30px;
+            font-size: 1.2em;
             text-decoration: none;
             display: inline-block;
             margin-top: 20px;
             border-radius: 5px;
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: 600px;
+            }
+            .continue {
+                font-size: 1.5em;
+                padding: 20px 40px;
+            }
         }
     </style>
 </head>
@@ -35,7 +47,6 @@
     <div class="container">
         <img src="{% static '2.png' %}" alt="산업재해 보상보험">
         <div>
-            <!-- Django의 URL 리버싱 기능을 사용하여 info2로 이동 -->
             <a href="{% url 'info3' %}" class="continue">계속하기</a>
         </div>
     </div>
