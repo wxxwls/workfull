@@ -6,10 +6,19 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 LANGUAGES = [
-    ('ko', 'Korean'),
-    ('en', 'English'),
-    ('vi', 'Vietnamese'),
+    ('ko', '한국어'),        # Korean
+    ('en', 'English'),      # English
+    ('vi', 'Tiếng Việt'),   # Vietnamese
+    ('zh-hans', '中文'),     # Simplified Chinese
+    ('ru', 'русский'),      # Russian
+    ('th', 'ไทย'),          # Thai
+    ('ar', 'العربية'),      # Arabic
+    ('ja', '日本語'),       # Japanese
+    ('af', 'Afrikaans'),    # Afrikaans
+    ('fil', 'Filipino'),    # Filipino
+    ('mn', 'монгол'),       # Mongolian
 ]
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
